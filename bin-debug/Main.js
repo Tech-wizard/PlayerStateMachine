@@ -45,14 +45,14 @@ var Player = (function (_super) {
     var d = __define,c=Player,p=c.prototype;
     p.move = function (targetX, targetY) {
         egret.Tween.removeTweens(this._body);
-        this._stateMachine.setState(new PlayerMoveState(this));
         if (targetX > this._body.x) {
             this._body.skewY = 180;
         }
         else {
             this._body.skewY = 0;
         }
-        this.startWalk();
+        this._stateMachine.setState(new PlayerMoveState(this));
+        //    this.startWalk();
         egret.Tween.get(this._body).to({ x: targetX, y: targetY }, 2000).call(function () { this.idle(); }, this);
         // if (this._body.x >= targetX - 5 && this._body.x <= targetX + 5 && this._body.y <= targetY + 5 && this._body.y >= targetY - 5) {
         //    if(this._body.x==targetX&&this._body.y==targetY){
@@ -61,7 +61,7 @@ var Player = (function (_super) {
     };
     p.idle = function () {
         this._stateMachine.setState(new PlayerIdleState(this));
-        this.startidle();
+        // this.startidle();
     };
     p.startWalk = function () {
         var _this = this;
@@ -115,6 +115,7 @@ var PlayerMoveState = (function (_super) {
         //     this._player.move;
         // }, this, 500)
         this._player._ifwalk = true;
+        this._player.startWalk();
     };
     p.onExit = function () {
         this._player._ifwalk = false;
@@ -134,6 +135,7 @@ var PlayerIdleState = (function (_super) {
         //     this._player.idle();
         // }, this, 500)
         this._player._ifidle = true;
+        this._player.startidle();
     };
     p.onExit = function () {
         this._player._ifidle = false;
@@ -147,10 +149,10 @@ var StateMachine = (function () {
     var d = __define,c=StateMachine,p=c.prototype;
     p.setState = function (e) {
         if (this.CurrentState != null) {
-            this.CurrentState.onExit;
+            this.CurrentState.onExit();
         }
         this.CurrentState = e;
-        e.onEnter;
+        e.onEnter();
     };
     return StateMachine;
 }());

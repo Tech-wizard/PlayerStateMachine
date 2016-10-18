@@ -53,13 +53,13 @@ class Player extends egret.DisplayObjectContainer {
 
     }
     public move(targetX: number, targetY: number) {
-        egret.Tween.removeTweens(this._body);
-        this._stateMachine.setState(new PlayerMoveState(this));
+         egret.Tween.removeTweens(this._body);
         if (targetX > this._body.x) {
             this._body.skewY = 180;
         }
         else { this._body.skewY = 0; }
-        this.startWalk();
+        this._stateMachine.setState(new PlayerMoveState(this));
+
         egret.Tween.get(this._body).to({ x: targetX, y: targetY }, 2000).call( function(){this.idle()} ,this);
        // if (this._body.x >= targetX - 5 && this._body.x <= targetX + 5 && this._body.y <= targetY + 5 && this._body.y >= targetY - 5) {
         //    if(this._body.x==targetX&&this._body.y==targetY){
@@ -70,7 +70,7 @@ class Player extends egret.DisplayObjectContainer {
     public idle() {
 
         this._stateMachine.setState(new PlayerIdleState(this));
-        this.startidle();
+       // this.startidle();
     }
 
 
@@ -143,8 +143,9 @@ class PlayerMoveState extends PlayerState {
         //     this._player.move;
         // }, this, 500)
         this._player._ifwalk = true;
-
-
+  
+        this._player.startWalk();
+      
     }
     onExit() {
         this._player._ifwalk = false;
@@ -160,8 +161,8 @@ class PlayerIdleState extends PlayerState {
         // egret.setTimeout(() => {
         //     this._player.idle();
         // }, this, 500)
-        this._player._ifidle = true;
-
+         this._player._ifidle = true;
+         this._player.startidle();
 
     }
     onExit() {
@@ -177,10 +178,10 @@ class StateMachine {
     setState(e: State) {
 
         if (this.CurrentState != null) {
-            this.CurrentState.onExit;
+            this.CurrentState.onExit();
         }
         this.CurrentState = e;
-        e.onEnter;
+        e.onEnter();
     }
 
 }
