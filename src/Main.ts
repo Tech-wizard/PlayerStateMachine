@@ -43,8 +43,8 @@ class Player extends egret.DisplayObjectContainer {
         this._body = new egret.Bitmap;
         this._body.texture = RES.getRes("idle_1_png");
         this._main.addChild(this._body);
-        this._body.anchorOffsetX = 192 / 2;
-        this._body.anchorOffsetY = 192 / 2;
+        this._body.anchorOffsetX = 120;
+        this._body.anchorOffsetY = 120;
         this._stateMachine = new StateMachine();
         this._body.x = this._main.stage.stageWidth / 2;
         this._body.y = this._main.stage.stageHeight / 2;
@@ -60,10 +60,11 @@ class Player extends egret.DisplayObjectContainer {
         }
         else { this._body.skewY = 0; }
         this.startWalk();
-        egret.Tween.get(this._body).to({ x: targetX, y: targetY }, 2000);
-        if (this._body.x >= targetX - 5 && this._body.x <= targetX + 5 && this._body.y <= targetY + 5 && this._body.y >= targetY - 5) {
-            this.idle();
-        }
+        egret.Tween.get(this._body).to({ x: targetX, y: targetY }, 2000).call( function(){this.idle()} ,this);
+       // if (this._body.x >= targetX - 5 && this._body.x <= targetX + 5 && this._body.y <= targetY + 5 && this._body.y >= targetY - 5) {
+        //    if(this._body.x==targetX&&this._body.y==targetY){
+        //     this.idle();
+        // }
     }
 
     public idle() {
