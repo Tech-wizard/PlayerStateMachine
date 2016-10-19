@@ -255,7 +255,6 @@ var Main = (function (_super) {
         this._txInfo.x = 30;
         this._txInfo.y = 100;
         this.addChild(this._txInfo);
-        // this.stage.touchEnabled=true;
         //    var body = new egret.Bitmap;
         //        body.texture = RES.getRes("idle_1_png");
         //         this.addChild(body);

@@ -308,7 +308,7 @@ class Main extends egret.DisplayObjectContainer {
         this._txInfo.y = 100;
         this.addChild(this._txInfo);
 
-        // this.stage.touchEnabled=true;
+  
 
 
         //    var body = new egret.Bitmap;
