@@ -52,7 +52,6 @@ var Player = (function (_super) {
             this._body.skewY = 0;
         }
         this._stateMachine.setState(new PlayerMoveState(this));
-        //    this.startWalk();
         egret.Tween.get(this._body).to({ x: targetX, y: targetY }, 2000).call(function () { this.idle(); }, this);
         // if (this._body.x >= targetX - 5 && this._body.x <= targetX + 5 && this._body.y <= targetY + 5 && this._body.y >= targetY - 5) {
         //    if(this._body.x==targetX&&this._body.y==targetY){
